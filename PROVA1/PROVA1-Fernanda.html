@@ -1,0 +1,208 @@
+<!--Nome: Fernanda Cristina Brasilino dos Santos - PROVA 1º Bimestre-->
+<!DOCTYPE html>
+<html lang="pt-bt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../../../Working%20files/HELIO%20BAROLO%20JUNIOR/PROVA%201%20(P1)/style.css">
+    <title>Programação Web 2021/2 &bull; PROVA 1</title>
+    <style>
+        * {
+            font-family: Calibri, Arial, sans-serif;
+        }
+
+        body {
+            background: maroon;
+            background: linear-gradient(0deg, maroon 0%, coral 100%);
+            height: 100vh;
+
+        }
+
+        main {
+            margin: 5%;
+            background-color: white;
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 5px 5px rgba(250, 250, 250, 0.2);
+        }
+
+        h1 {
+            color: maroon;
+            text-shadow: 2px 2px rgba(0, 100, 0, 0.2);
+            text-align: center;
+
+        }
+
+        .input-set,
+        .result {
+            margin: 15px auto;
+            padding: 10px;
+            width: 50%;
+            text-align: center;
+        }
+
+        .input-set label {
+            display: block;
+            color: maroon
+        }
+
+        .result {
+            background-color: maroon;
+            color: white;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!--Conteúdo da div "root" já apagada? Sim!-->
+    <div id="root"></div> 
+
+    <script type="text/babel">
+
+        /**********************************************************************************
+        1. Crie três componentes funcionais a partir do código HTML contido dentro da
+           div "root", mais acima. Não se esqueça de adaptar o nome dos atributos HTML para
+           atributos JSX, quando for o caso. Em seguida, apague o conteúdo da div "root", 
+           deixando-o vazio.
+        **********************************************************************************/
+
+        // Estes são os componentes funcionais
+        // Primeiro componente
+        function Componente1({handleChange}) {
+            return (
+                /* O atributo HTML "class", quando usado em uma prop React, precisa ser renomeada para "className"*/
+                <div className="input-set"> 
+                    {/* Em JSX, o atributo HTML "for" passa a ser "htmlFor" já que "for" é uma palavra reservada do JavaScript */}
+                    <label htmlFor="peso">Peso:</label>
+                    <input id="peso" type="number" onChange={handleChange} />
+                </div>
+            )
+        }
+
+        // Segundo componente
+        function Componente2({handleChange}) {
+            return (
+                /* O atributo HTML "class", quando usado em uma prop React, precisa ser renomeada para "className"*/
+                <div className="input-set">
+                    {/* Em JSX, o atributo HTML "for" passa a ser "htmlFor" já que "for" é uma palavra reservada do JavaScript */}
+                    <label hthmlFor="altura">Altura:</label>
+                    <input id="altura" type="number" onChange={handleChange} />
+                </div>
+            )
+        }
+
+        // Terceiro componente
+        function Componente3({imc, faixa}) {
+            return (
+                /* O atributo HTML "class", quando usado em uma prop React, precisa ser renomeada para "className"*/
+                <div className="result">
+                    <div>IMC: {imc}</div> {/*Mostra o resultado do IMC*/}
+                    <div>Faixa: {faixa} </div> {/*Mostra qual é a faixa correspondente ao resultado do IMC*/}
+                </div>
+            )
+        }
+
+        function Imc() {
+
+            /**********************************************************************************
+            2. Declare as variáveis de estado que julgar necessárias.
+            **********************************************************************************/
+
+            // Estas são as variáveis de estado que vão receber os valores
+            const [peso, setPeso] = React.useState('') // Esta é a variável PESO
+            const [altura, setAltura] = React.useState('') // Esta é a variável ALTURA
+            const [imc, setImc] = React.useState('') // Esta é a variável que vai receber o resultado do IMC
+            const [faixa, setFaixa] = React.useState('') // Esta é a variável que vai receber a faixa de acordo com o resultado do IMC já calculado
+
+            /**********************************************************************************
+            3. Escreva o código do useEffect(), contemplando os passos seguintes:
+        
+            - Calcule o IMC, dividindo o peso pela altura elevada ao quadrado
+            - Determine a faixa de IMC:
+                - Menor que 18,5 -> Peso baixo
+                - Entre 18,5 e 24,9 -> Peso normal
+                - Entre 25 e 29,9 -> Sobrepeso
+                - Entre 30 e 34,9 -> Obesidade (Grau I)
+                - Entre 35 e 39,9 -> Obesidade Severa (Grau II)
+                - Maior ou igual a 40 -> Obesidade Mórbida (Grau III)
+            - Atualize as variáveis de estado apropriadas. Eles devems ser usadas dentro do
+                terceiro componente, para exibir o resultado
+            - NÃO SE ESQUEÇA DAS DEPENDÊNCIAS DO useEffect()!!!
+            **********************************************************************************/
+
+            React.useEffect(() => { // Usado para fazer os cálculos utilizando os valores capturados com o useState
+
+            let calculaImc, calculaFaixa // Variáveis utilizadas para calcular o IMC e a FAIXA, respectivamente
+
+            // Este é o cálculo do IMC
+            calculaImc = peso / (altura * altura)
+
+            // Este é o cálculo da faixa de acordo com o resultado do IMC
+            if(calculaImc < 18.5) {
+                calculaFaixa = 'Peso baixo'
+            }
+            else if (calculaImc >= 18.5 && calculaImc <= 24.9) {
+                calculaFaixa = 'Peso normal'
+            }
+            else if (calculaImc >= 25 && calculaImc <= 29.9) {
+                calculaFaixa = 'Sobrepeso'
+            }
+            else if (calculaImc >= 30 && calculaImc <= 34.9) {
+                calculaFaixa = 'Obesidade (Grau I)'
+            }
+            else if (calculaImc >= 35 && calculaImc <= 39.9) {
+                calculaFaixa = 'Obesidade Severa (Grau II)'
+            }
+            else if (calculaImc >= 40){
+                calculaFaixa = 'Obesidade Mórbida (Grau III)'
+            }
+
+            setImc(calculaImc)
+            setFaixa(calculaFaixa)
+
+            }, [peso, altura])
+
+            /**********************************************************************************
+             4. Faça com que mudanças nos inputs dos dois primeiros componentes atualizem
+                as respectivas variáveis de estado.       
+            **********************************************************************************/
+
+            // Para isso foi utilizado o handleChange, que se altera conforme vamos digitando o valor do PESO e ALTURA
+
+            /**********************************************************************************
+             5. Comente os principais trechos do seu código.       
+            **********************************************************************************/
+            return (
+                <>
+                <main>
+                    <h1>Cálculo do Índice de Massa Corporal (IMC)</h1>
+
+                    {/* Aqui vai o primeiro componente */}
+                    {/* Este é o primeiro componente */}
+                    <Componente1 handleChange={ event => setPeso(event.target.value)} />
+                    {/* Aqui vai o segundo componente */}
+                    {/* Este é o segundo componente */}
+                    <Componente2 handleChange={ event => setAltura(event.target.value)} />
+                    {/* Aqui vai o terceiro componente */}
+                    {/* Este é o terceiro componente */}
+                    <Componente3 imc={imc} faixa={faixa} />
+                </main>
+                </>
+            )
+
+        }
+
+        ReactDOM.render(<Imc />, document.getElementById('root'))
+
+    </script>
+
+</body>
+
+</html>
